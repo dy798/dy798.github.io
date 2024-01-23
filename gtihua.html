@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html style=" background-color: #000000;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="edge">
+    <meta http-equiv="Expirse" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1，maximum-scale=1，minimum-scale=1">
+
+    <title id="titletitle"></title>
+</head>
+<link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.13.2/skins/default/aliplayer-min.css" />
+<script charset="utf-8" type="text/javascript" src="https://g.alicdn.com/de/prismplayer/2.13.2/aliplayer-h5-min.js">
+
+</script>
+<link rel="stylesheet" href="tcjs/iconfont.css" />
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+</head>
+<body>
+
+<div style="width:100%;height: 90vh;" id="J_prismPlayer"></div>
+<div>
+    <button id="button" onclick="tz()"
+            style="width: 86%; height: 5vh;  background-color: #3498db; color:#fff; font-size: 2vh; border: none; position: absolute; bottom: 0; margin: 5%;  float: left; "></button>
+</div>
+
+
+<div class="ground" id="Ground">
+    <div class="ground1">
+        <div class="headline">
+            <h4 id="Headline" style="text-align: center;"></h4>
+        </div>
+        <div class="button1"><button class="yes" onclick="Button1onclick()" id="Button1">前往</button><button
+                class="no" onclick="conceal()" id="Button2">取消</button></div>
+    </div>
+</div>
+</body>
+<script>
+    if ((navigator.userAgent.match(/(win|iPhone|iPod|Android|ios|iOS|iPad|WebOS|Symbian|Windows Phone|Phone)/i))) {
+        
+        console.log("手机访问");
+        console.log(location.search);
+        var params = location.search.substr(1);
+        var arr = params.split('=');
+        console.log(arr);
+        console.log(arr[0]);
+        console.log(arr[1]);
+        console.log(arr[2]);
+        document.getElementById("titletitle").innerHTML = decodeURI(arr[1])
+        document.getElementById("Headline").innerHTML = decodeURI(arr[1])
+        document.getElementById("button").innerHTML = decodeURI(arr[2])
+        var arr000 = decodeURI(arr[0]);
+        var arr01 = arr000.substring(0, 2)
+        var arr02 = arr000.substring(2, 4)
+        var spurl = 'https://1uwj8p.zmuwjfh4.live/video.php?' + decodeURI(arr[0]) + '.m3u8'//?202301318088=牢记群552668403=吃瓜合集自取=https://docs.qq.com/doc/p/4b04afab903bb900fef1a0b18bb6430deeecb32e
+        var player = new Aliplayer({
+            id: 'J_prismPlayer',
+            source: spurl,
+        }, function(player) {
+            console.log('The player is created.')
+        });
+        document.getElementById("button").style.backgroundColor = "#" + arr[4]
+        document.getElementById("Button1").style.backgroundColor = "#" + arr[4]
+        document.getElementById("Button2").style.backgroundColor = "#" + arr[4]
+        /* document.getElementById("svgsvg").style.fill=  "#" + arr[4] */
+        var index = 0;
+
+        function changeTitle() {
+            if (arr[7] == "1") {
+                if (index % 2 == 0) {
+                    document.getElementById("titletitle").innerHTML = "★☆" + decodeURI(arr[1]) + "★☆";
+
+                } else {
+                    document.getElementById("titletitle").innerHTML = "☆★" + decodeURI(arr[1]) + "☆★";
+
+                }
+            }
+
+
+            index++;
+            //alert(index);  //测试index
+            setTimeout("changeTitle()", 500);
+        }
+
+        function autoPlay() {
+            wx.config({
+                // 配置信息, 即使不正确也能使用 wx.ready
+                debug: false, //false代表关闭调试模式，true代表开启调试模式
+                appId: '', //appId
+                timestamp: 1, //生成签名的时间戳
+                nonceStr: '', //生成签名的随机串
+                signature: '', //签名
+                jsApiList: [] //需要使用的JS接口列表
+            });
+            wx.ready(function() {
+                if (player) //创建的Aliplayer对象
+                {
+                    player.play();
+                }
+            });
+        };
+        // 解决ios不自动播放的问题
+        autoPlay();
+        window.onload = changeTitle;
+
+        player.on('pause', function() {
+            if (arr[5] == "1") {
+                document.getElementById("Ground").style.display = "block";
+
+            }
+
+
+        })
+        player.on('play', function() {
+            if (arr[5] == "1") {
+                document.getElementById("Ground").style.display = "none";
+
+            }
+
+
+        })
+
+        player.on('ended', function() {
+            if (arr[6] == "1") {
+                document.location = decodeURIComponent(arr[3])
+            }
+        })
+
+        function Button1onclick() {
+            document.location = decodeURIComponent(arr[3])
+        }
+
+        function conceal() {
+            document.getElementById("Ground").style.display = "none";
+            player.play()
+        }
+
+        function tz() {
+            document.location = decodeURIComponent(arr[3])
+        }
+
+    } else {
+
+        document.location = "https://www.baidu.com/"
+
+    }
+    function svgclick() {
+
+    }
+</script>
+</html>
+<style>
+    .ground {
+        display: none;
+
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        width: 200px;
+        height: 100px;
+        border-radius: 20px;
+        border: 2px solid #fff;
+        background: #fff;
+        margin: auto;
+        position: absolute;
+        top: -200px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .ground1 {
+        position: relative;
+    }
+
+    .headline {
+        margin: auto;
+        position: absolute;
+        top: 1px;
+        left: 10%;
+        bottom: 0;
+    }
+
+    /*#Headline{
+            text-align: alert;
+        }*/
+    .yes,
+    .no {
+        border: none;
+
+        border-radius: 11px;
+        width: 22%;
+        height: 25px;
+        font-size: 10px;
+    }
+
+    .yes {
+        margin: auto;
+        position: absolute;
+        top: 150px;
+        left: 5px;
+        right: 0;
+        bottom: 0;
+    }
+
+    .no {
+        margin: auto;
+        position: absolute;
+        top: 150px;
+        left: 120px;
+        right: 0;
+        bottom: 0;
+    }
+
+    button:hover {
+
+        border: 2px solid #ffdd55;
+    }
+</style>
